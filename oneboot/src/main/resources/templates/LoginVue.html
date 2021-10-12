@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        账号：<input type="text" v-model="account"> <br>
+        密码：<input type="password" v-model="pwd"> <br>
+        <button @click="login">登录</button>
+        <button @click="Reg">注册</button>
+    </div>
+<script>
+    var vm=new Vue({
+       el:"#app",
+        data:{
+           account:'',
+            pwd:''
+        },
+        methods:{
+           login:function () {
+               // 调用 axios 发送到 后台
+                axios.post("/admin/loginByShiro",{
+                    adminAccount:this.account,
+                    adminPwd:this.pwd
+                   }
+                ).then(res=>{
+                    console.log(res)
+                });
+           },
+            Reg:function () {
+                window.location.href = "/page/Regin";
+            }
+
+        }
+    });
+
+</script>
+
+</body>
+</html>

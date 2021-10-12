@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <link rel="stylesheet" href="/element-ui-2.13.2.css">
+    <script src="/vue.js"></script>
+    <script src="/element-ui-2.13.2.js"></script>
+    <script src="/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        #dd{
+            margin-top: 25px;
+        }
+    </style>
+
+</head>
+<body>
+<div id="app">
+    <template>
+        <div id="dd" align="center">
+        <el-form :inline="true" class="demo-form-inline">
+            <el-form-item label="用户名:">
+                <el-input v-model="Admin.adminName" placeholder="请输入用户名"></el-input>
+            </el-form-item>
+            <br>
+            <el-form-item label="密 码:">
+                <el-input v-model="Admin.adminPwd" placeholder="请输入密码"></el-input>
+            </el-form-item>
+            <br>
+            <el-form-item>
+                <el-button type="success" @click="Login">登&nbsp;录</el-button>
+                <el-button type="warning" @click="reg">注&nbsp;册</el-button>
+            </el-form-item>
+        </el-form>
+        </div>
+    </template>
+
+</div>
+
+<script>
+    var vm  = new Vue({
+        el:"#app",
+        data:{
+            Admin:{
+                adminName: "",
+                adminPwd: ""
+            }
+
+
+        },
+        methods:{
+            Login:function(){
+                axios.get("/admin/login",{
+                    params:{
+                        adminName:this.Admin.adminName,
+                        adminPwd:this.Admin.adminPwd
+
+                    }
+                }).then( res=>{
+                    console.log(res)
+                    if(res.data.code == 0) {
+                        window.location.href= "/page/studentList";
+                    }
+                });
+            },
+            reg:function() {
+                window.location.href = "/page/Regin";
+            }
+        }
+    })
+
+    // created:function () {
+    //     // 页面一加载就要  访问url  /student/selectAll
+    //     axios.get("/api/Student/selectPageAll"),{}.then( res=>{
+    //         console.log(res)
+    //         // 把 json 数组 赋值给  tableData
+    //         this.tableData=res.data.data
+    //     } );
+    // })
+    // });
+</script>
+</body>
+
+</html>

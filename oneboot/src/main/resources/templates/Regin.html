@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="/element-ui-2.13.2.css">
+    <script src="/element-ui-2.13.2.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        #dd{
+            margin-top: 25px;
+        }
+    </style>
+
+</head>
+<body>
+<h1 align="center">注册</h1>
+<div id="app">
+    <template>
+        <div id="dd" align="center">
+<el-form :inline="true" class="demo-form-inline" :rules="rules">
+    <el-form-item label="请输入用户名:" prop="adminName">
+        <el-input v-model="Admin.adminName" placeholder="请输入用户名"></el-input>
+    </el-form-item>
+    <br>
+    <el-form-item label="请输入密码:" prop="adminPwd">
+        <el-input v-model="Admin.adminPwd" placeholder="请输入密码"></el-input>
+    </el-form-item>
+    <br>
+    <el-form-item label="请输入手机号:" prop="adminPhone">
+        <el-input v-model="Admin.adminPhone" placeholder="请输入手机号"></el-input>
+    </el-form-item>
+    <br>
+    <el-form-item label="请输入账户:" prop="adminAccount">
+        <el-input v-model="Admin.adminAccount" placeholder="请输入密码"></el-input>
+    </el-form-item>
+    <br>
+    <!--<el-form-item label="请输入加密:"  v-show="hidden">-->
+        <!--<el-input v-model="Admin.salt" placeholder="请输入加密"></el-input>-->
+    <!--</el-form-item>-->
+    <br>
+    <el-form-item>
+        <el-button type="success" @click="regin">注&nbsp;册</el-button>
+    </el-form-item>
+</el-form>
+        </div>
+    </template>
+
+</div>
+
+<script>
+    var vm  = new Vue({
+        el:"#app",
+        data:{
+            Admin:{
+                adminName: "",
+                adminPwd: "",
+                adminPhone:"",
+                adminAccount:"",
+                salt:""
+
+            },
+            rules:{
+                adminName :[{required: true, message: '请输入用户名', trigger: 'blur'}],
+                adminPwd :[{required: true, message: '请输入密码', trigger: 'blur'}],
+                adminPhone :[{required: true, message: '请输入手机号', trigger: 'blur'}]
+            }
+
+
+        },
+        methods:{
+            regin:function(){
+                console.log("sjkl")
+                axios.post("/admin/Reg",{
+                        adminName:this.Admin.adminName,
+                        adminPwd:this.Admin.adminPwd,
+                        adminPhone:this.Admin.adminPhone,
+                        adminAccount:this.Admin.adminAccount,
+                        salt:this.Admin.salt
+
+                }).then( res=>{
+                    console.log(res);
+                    console.log(res.config.params);
+                    // if(res.config.params.adminAccount !=null && res.config.params.adminName && res.config.params.adminPhone) {
+                    //     if(res.data.code == 200) {
+                    //         console.log("注册成功");
+                    //         window.location.href = "/page/RegSuccess";
+                    //     }
+                    // }else {
+                    //     alert("不能为空，请填写内容")
+                    // }
+            });
+            }
+        }
+        // created:function () {
+        //
+        // }
+    });
+</script>
+</body>
+</html>
